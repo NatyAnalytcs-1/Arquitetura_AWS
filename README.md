@@ -3,7 +3,7 @@
 Esta arquitetura mostra como um **arquivo** pode ser enviado, processado e armazenado na nuvem da AWS de forma **automática e segura**.
 
 <div align="center">
-  <img src="./imagem2.PNG" alt="c" height="300">
+  <img src="./imagem2.png" alt="c" height="300">
 </div>
 
 ## Como funciona?
