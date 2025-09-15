@@ -4,7 +4,7 @@ Esta arquitetura permite que usuários façam **upload de arquivos diretamente n
 
 
 <div align="center">
-  <img src="./imagens/1.PNG" alt="c" height="300">
+  <img src="imagem_2025-09-15_102327089.PNG" alt="c" height="300">
 </div>
 
 
