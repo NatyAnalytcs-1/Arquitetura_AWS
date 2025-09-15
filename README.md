@@ -1,32 +1,49 @@
-# Arquitetura AWS - Upload de Arquivos com Presigned URL
+# Arquitetura Simplificada de Upload de Arquivos na AWS
 
-Esta arquitetura permite que usuários façam **upload de arquivos diretamente no Amazon S3**, de forma segura e escalável, utilizando **Presigned URLs**.
-
+Esta arquitetura mostra como um **arquivo** pode ser enviado, processado e armazenado na nuvem da AWS de forma **automática e segura**.
 
 <div align="center">
-  <img src="imagem1.PNG" alt="c" height="300">
+  <img src="./imagem2.PNG" alt="c" height="300">
 </div>
 
+## Como funciona?
 
+1. **Usuário**
+   - Uma pessoa ou sistema envia um arquivo usando um link (endpoint).
 
-## Fluxo da Arquitetura
+2. **API Gateway**
+   - É a "porta de entrada".  
+   - Recebe a requisição do usuário e garante que apenas acessos autorizados passem.
 
-1. **Requisição de URL de Upload**  
-   - O usuário faz uma requisição **HTTP GET** para o endpoint `/getUploadUrl`.  
-   - A requisição chega ao **API Gateway**, que invoca uma **AWS Lambda**.  
-   - A função Lambda gera uma **Presigned URL** do S3 (um link temporário com permissões controladas).  
+3. **S3 (Armazenamento)**
+   - O arquivo é guardado no **Amazon S3**, um serviço de armazenamento seguro e escalável.  
+   - Pense nele como um "HD gigante na nuvem".
 
-2. **Upload do Arquivo**  
-   - O usuário recebe a Presigned URL e realiza uma requisição **HTTP PUT** diretamente no **Amazon S3**.  
-   - Dessa forma, o arquivo é armazenado sem passar pelo servidor da aplicação, garantindo mais performance e menor custo.
+4. **S3 Event**
+   - Quando um arquivo novo chega no S3, ele dispara um **evento automático**.
 
-## Benefícios
+5. **Lambda (Função Automática)**
+   - Uma função **Lambda** é executada quando o evento acontece.  
+   - Essa função pode:
+     - Ler informações do arquivo,
+     - Processar dados,
+     - Ou salvar resultados em outro lugar.
 
-- **Escalabilidade**: O upload vai diretamente para o S3, sem sobrecarregar servidores intermediários.  
-- **Segurança**: As Presigned URLs expiram em um tempo configurado, limitando o acesso.  
-- **Custo otimizado**: Reduz a necessidade de infraestrutura adicional para processar uploads.  
-- **Simplicidade**: O controle de autenticação e autorização pode ser delegado ao API Gateway e Lambda.  
+6. **CloudWatch (Monitoramento)**
+   - Todos os passos podem ser monitorados pelo **CloudWatch**.  
+   - Ele registra **logs** e gera **alertas** caso algo dê errado.
 
 ---
-**Resumo:**  
-O usuário solicita uma Presigned URL via **API Gateway + Lambda** e faz o upload direto para o **Amazon S3**, sem necessidade de que o backend manipule os arquivos.
+
+## Benefícios para o usuário
+
+- **Automático**: depois do upload, tudo acontece sozinho.  
+- **Seguro**: só quem tem permissão pode enviar arquivos.  
+- **Escalável**: funciona mesmo que milhares de arquivos cheguem ao mesmo tempo.  
+- **Baixo custo**: você só paga pelo que usa.  
+
+---
+
+✅ Resumindo:  
+O usuário envia um arquivo → Ele vai para o **S3** → Dispara um **Lambda** para processar → Tudo é monitorado pelo **CloudWatch**.  
+
